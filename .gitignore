@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 !.env.example
+# .env.local 按项目要求纳入版本管理：它只含 Supabase URL 与 publishable key（公开安全）
+# ⚠️ 任何时候都不要把 sb_secret_ / service_role 写进这个文件
+!.env.local
 
 # vercel
 .vercel

@@ -1,19 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
 import type { ReactNode } from "react";
 import "./globals.css";
-
-/**
- * 标题用宋体（思源宋体 600，按项目实际用字做了子集，约 27KB）。
- * 正文仍是系统黑体——中文长段落用宋体会难读。
- */
-const serif = localFont({
-  src: "./fonts/pawisle-serif.woff2",
-  weight: "600",
-  display: "swap",
-  variable: "--font-serif",
-  fallback: ["Songti SC", "SimSun", "STSong", "serif"],
-});
 
 export const metadata: Metadata = {
   applicationName: "茸屿 Pawisle",
@@ -34,7 +21,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="zh-CN" className={serif.variable}>
+    <html lang="zh-CN">
       <body>{children}</body>
     </html>
   );

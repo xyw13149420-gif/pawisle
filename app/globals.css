@@ -3,7 +3,20 @@
    奶油白底 + 雾紫天光 + 苔绿主色，柔软、圆润、不刺眼
    ───────────────────────────────────────────── */
 
+/*
+ * 标题宋体：思源宋体 600，按项目实际用字做的子集（145 字，28KB）。
+ * 放 public/ 而不是 next/font/local —— 文件缺失时只回落系统宋体，不会构建失败。
+ */
+@font-face {
+  font-family: "Pawisle Serif";
+  src: url("/fonts/pawisle-serif.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
+  --font-serif: "Pawisle Serif";
   --cream-0: #fffcf7;
   --cream-1: #fdf4ea;
   --cream-2: #f7e7d7;
