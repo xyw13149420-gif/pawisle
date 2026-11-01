@@ -29,13 +29,14 @@
   --moss-700: #3b5f4a;
 
   --clay-300: #f0c4b0;
-  --clay-500: #c9765a;
+  --clay-500: #c9765a; /* 仅用于装饰（圆点、图标描边） */
+  --clay-600: #a85739; /* 用于正文级别文字，对比度 5.02:1 */
 
   --ink-900: #1f1b16;
   --ink-700: #443e36;
   --ink-600: #6a625a;
-  --ink-400: #93897d;
-  --ink-300: #bcb3a7;
+  --ink-400: #776e62; /* 4.90:1，正文安全线以上 */
+  --ink-300: #b3aa9e; /* 仅装饰：占位符、禁用态、插画，不承载正文 */
 
   --line: #e8e1d7;
   --line-soft: #f1ece4;
@@ -242,7 +243,7 @@ input {
 }
 
 .input::placeholder {
-  color: var(--ink-300);
+  color: var(--ink-400);
 }
 
 .input:focus {
@@ -756,7 +757,7 @@ a.map-link:hover {
 
 .map-node[data-state="locked"] {
   border-style: dashed;
-  color: var(--ink-300);
+  color: var(--ink-400);
 }
 
 .map-body {
@@ -1001,7 +1002,7 @@ a.map-link:hover {
   display: grid;
   flex: none;
   place-items: center;
-  color: var(--ink-300);
+  color: var(--ink-400);
 }
 
 /* ── 适配测试 ───────────────────────────── */
@@ -1089,7 +1090,7 @@ a.map-link:hover {
 
 .quiz-hint {
   font-size: 11.5px;
-  color: var(--ink-300);
+  color: var(--ink-400);
 }
 
 .ghost-link {
@@ -1177,7 +1178,7 @@ a.map-link:hover {
 }
 
 .weak-score {
-  color: var(--clay-500);
+  color: var(--clay-600);
 }
 
 .weak-advice {
@@ -1259,7 +1260,7 @@ a.map-link:hover {
 }
 
 .budget-row[data-off="true"] .budget-label {
-  color: var(--ink-300);
+  color: var(--ink-400);
 }
 
 .budget-label {
@@ -1305,7 +1306,7 @@ a.map-link:hover {
 }
 
 .budget-input:disabled {
-  color: var(--ink-300);
+  color: var(--ink-400);
 }
 
 /* ─────────────────────────────────────────────
@@ -1646,7 +1647,7 @@ a.map-link:hover {
 .timeline-time {
   flex: none;
   font-size: 11.5px;
-  color: var(--ink-300);
+  color: var(--ink-400);
 }
 
 .timeline-photo {
@@ -2225,5 +2226,201 @@ a.map-link:hover {
   .task[data-done="true"] .task-box,
   .budget-row[data-off="false"] .task-box {
     animation: none;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   可访问性：焦点可见 / 触控热区 / 跳过导航
+   ───────────────────────────────────────────── */
+
+:root {
+  color-scheme: light;
+}
+
+/* 键盘焦点：只在键盘操作时出现，不干扰鼠标点击 */
+:where(a, button, [tabindex], summary):focus-visible {
+  outline: 2px solid var(--moss-700);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+/* 输入框已用 box-shadow 做焦点环，不再叠加 outline */
+.input:focus-visible,
+.budget-input:focus-visible,
+.weight-input:focus-visible {
+  outline: none;
+}
+
+.skip-link {
+  position: absolute;
+  left: 50%;
+  top: -64px;
+  z-index: 20;
+  padding: 10px 18px;
+  border-radius: 0 0 12px 12px;
+  background: var(--moss-700);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateX(-50%);
+  transition: top 0.18s ease;
+}
+
+.skip-link:focus-visible {
+  top: 0;
+  outline-offset: 0;
+}
+
+/*
+ * 触控热区：用负 margin 抵消 padding，视觉尺寸不变但可点区域 ≥40px。
+ * 直接用 ::after 扩大热区会和相邻行重叠，误触风险更高。
+ */
+.task-check {
+  padding: 8px;
+  margin: -8px 0 -8px -8px;
+}
+
+.timeline-del {
+  padding: 12px;
+  margin: -12px -10px -12px 0;
+}
+
+.ghost-action {
+  padding: 14px 8px;
+  margin: -14px -8px;
+}
+
+.kcard-trigger {
+  padding: 8px 0;
+  margin: -8px 0;
+}
+
+.ghost-link {
+  padding: 10px 4px;
+  margin: -10px -4px;
+}
+
+.period-tab {
+  padding: 11px 8px;
+}
+
+/* ─────────────────────────────────────────────
+   响应式
+   ───────────────────────────────────────────── */
+
+/* 小屏手机（320–359，如 iPhone SE） */
+@media (max-width: 359px) {
+  .page-shell {
+    padding: 22px 14px calc(22px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .app-shell {
+    padding: 16px 14px calc(26px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .brand-mark {
+    width: 86px;
+    height: 78px;
+  }
+
+  .brand-title {
+    font-size: 24px;
+  }
+
+  .app-title {
+    font-size: 21px;
+  }
+
+  .card {
+    padding: 18px 16px;
+  }
+
+  .quickgrid {
+    gap: 6px;
+  }
+
+  .quickbtn {
+    gap: 4px;
+    padding: 10px 4px;
+  }
+
+  .quickicon {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+  }
+
+  .quicklabel {
+    font-size: 11.5px;
+  }
+
+  .weather-sentence {
+    font-size: 19px;
+  }
+
+  .stat-num {
+    font-size: 23px;
+  }
+
+  .budget-big {
+    font-size: 32px;
+  }
+
+  .budget-input {
+    width: 58px;
+  }
+
+  .mood-label {
+    width: 72px;
+    font-size: 12px;
+  }
+
+  .share-card {
+    min-height: 400px;
+    padding: 22px 18px 18px;
+  }
+
+  .share-sentence {
+    font-size: 17px;
+  }
+}
+
+/* 平板及以上：这是移动端 App，保持手机栏宽，只加纵向呼吸 */
+@media (min-width: 768px) {
+  .page-shell {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .app-shell {
+    max-width: 480px;
+    padding-top: 40px;
+    padding-bottom: 56px;
+  }
+
+  .stack {
+    max-width: min(440px, 100%);
+  }
+
+  .share-page {
+    max-width: 480px;
+  }
+}
+
+/* 横屏矮屏：别让品牌块把表单挤出去 */
+@media (max-height: 520px) and (orientation: landscape) {
+  .page-shell {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .brand-mark {
+    width: 64px;
+    height: 58px;
+  }
+
+  .brand-sub {
+    display: none;
   }
 }

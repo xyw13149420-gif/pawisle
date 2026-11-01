@@ -64,7 +64,13 @@ export function LoginForm({ next, initialError }: LoginFormProps) {
   return (
     <>
       {error ? (
-        <div className="alert" data-tone="error" role="status">
+        <div
+          className="alert"
+          data-tone="error"
+          id="login-message"
+          role="alert"
+          aria-live="assertive"
+        >
           <span className="alert-dot" aria-hidden="true" />
           <span>{error.message}</span>
         </div>
@@ -87,6 +93,8 @@ export function LoginForm({ next, initialError }: LoginFormProps) {
             className="input"
             placeholder="you@example.com"
             data-invalid={field === "email" || undefined}
+            aria-invalid={field === "email" || undefined}
+            aria-describedby={field === "email" ? "login-message" : undefined}
           />
         </div>
 
@@ -104,6 +112,8 @@ export function LoginForm({ next, initialError }: LoginFormProps) {
               className="input input-with-action"
               placeholder="输入密码"
               data-invalid={field === "password" || undefined}
+              aria-invalid={field === "password" || undefined}
+              aria-describedby={field === "password" ? "login-message" : undefined}
             />
             <button
               type="button"

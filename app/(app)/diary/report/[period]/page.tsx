@@ -141,13 +141,14 @@ export default async function ReportPage({ params }: PageProps) {
         </section>
       ) : null}
 
-      <nav className="period-tabs">
+      <nav className="period-tabs" aria-label="报告周期">
         {PERIOD_LINKS.map((item) => (
           <Link
             className="period-tab"
             data-on={item.period === raw}
             key={item.period}
             href={`/diary/report/${item.period}`}
+            aria-current={item.period === raw ? "page" : undefined}
           >
             {item.label}
           </Link>

@@ -12,7 +12,13 @@ export function ResetPasswordForm() {
   return (
     <>
       {state.status !== "idle" ? (
-        <div className="alert" data-tone={state.status === "notice" ? "notice" : "error"} role="status">
+        <div
+          className="alert"
+          data-tone={state.status === "notice" ? "notice" : "error"}
+          id="reset-message"
+          role={state.status === "notice" ? "status" : "alert"}
+          aria-live={state.status === "notice" ? "polite" : "assertive"}
+        >
           <span className="alert-dot" aria-hidden="true" />
           <span>{state.message}</span>
         </div>
@@ -33,6 +39,8 @@ export function ResetPasswordForm() {
               className="input input-with-action"
               placeholder={`至少 ${PASSWORD_MIN} 位，字母 + 数字`}
               data-invalid={state.field === "password" || undefined}
+aria-invalid={state.field === "password" || undefined}
+aria-describedby={state.field === "password" ? "reset-message" : undefined}
             />
             <button
               type="button"
@@ -58,6 +66,8 @@ export function ResetPasswordForm() {
             className="input"
             placeholder="确认新密码"
             data-invalid={state.field === "confirmPassword" || undefined}
+aria-invalid={state.field === "confirmPassword" || undefined}
+aria-describedby={state.field === "confirmPassword" ? "reset-message" : undefined}
           />
         </div>
 

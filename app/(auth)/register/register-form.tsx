@@ -15,7 +15,13 @@ export function RegisterForm() {
   return (
     <>
       {state.status !== "idle" ? (
-        <div className="alert" data-tone={state.status === "notice" ? "notice" : "error"} role="status">
+        <div
+          className="alert"
+          data-tone={state.status === "notice" ? "notice" : "error"}
+          id="register-message"
+          role={state.status === "notice" ? "status" : "alert"}
+          aria-live={state.status === "notice" ? "polite" : "assertive"}
+        >
           <span className="alert-dot" aria-hidden="true" />
           <span>{state.message}</span>
         </div>
@@ -36,6 +42,8 @@ export function RegisterForm() {
             className="input"
             placeholder="you@example.com"
             data-invalid={field === "email" || undefined}
+            aria-invalid={field === "email" || undefined}
+            aria-describedby={field === "email" ? "register-message" : undefined}
           />
         </div>
 
@@ -53,6 +61,8 @@ export function RegisterForm() {
               className="input input-with-action"
               placeholder={`至少 ${PASSWORD_MIN} 位，字母 + 数字`}
               data-invalid={field === "password" || undefined}
+              aria-invalid={field === "password" || undefined}
+              aria-describedby={field === "password" ? "register-message" : undefined}
             />
             <button
               type="button"
@@ -78,6 +88,8 @@ export function RegisterForm() {
             className="input"
             placeholder="确认密码"
             data-invalid={field === "confirmPassword" || undefined}
+            aria-invalid={field === "confirmPassword" || undefined}
+            aria-describedby={field === "confirmPassword" ? "register-message" : undefined}
           />
         </div>
 

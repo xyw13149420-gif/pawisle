@@ -11,7 +11,13 @@ export function ForgotPasswordForm() {
   return (
     <>
       {state.status !== "idle" ? (
-        <div className="alert" data-tone={state.status === "notice" ? "notice" : "error"} role="status">
+        <div
+          className="alert"
+          data-tone={state.status === "notice" ? "notice" : "error"}
+          id="forgot-message"
+          role={state.status === "notice" ? "status" : "alert"}
+          aria-live={state.status === "notice" ? "polite" : "assertive"}
+        >
           <span className="alert-dot" aria-hidden="true" />
           <span>{state.message}</span>
         </div>
@@ -32,6 +38,8 @@ export function ForgotPasswordForm() {
             className="input"
             placeholder="you@example.com"
             data-invalid={state.field === "email" || undefined}
+aria-invalid={state.field === "email" || undefined}
+aria-describedby={state.field === "email" ? "forgot-message" : undefined}
           />
         </div>
 

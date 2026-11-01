@@ -16,7 +16,8 @@ export function WeatherCard({ weather }: { weather: DayWeather }) {
         <p className="weather-kicker">今日小岛天气</p>
       </div>
 
-      <p className="weather-sentence" key={weather.sentence}>
+      {/* 记录后天气会变，用 live region 让读屏自动播报，不用用户自己去找 */}
+      <p className="weather-sentence" key={weather.sentence} role="status" aria-live="polite">
         {weather.sentence}
       </p>
 
