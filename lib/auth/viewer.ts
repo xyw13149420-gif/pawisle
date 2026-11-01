@@ -32,11 +32,17 @@ export async function getViewer(): Promise<Viewer | null> {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return null;
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  if (!user) return null;
+    if (!user) return null;
 
-  return { id: user.id, email: user.email ?? "", demo: false };
+    return { id: user.id, email: user.email ?? "", demo: false };
+  } catch {
+    // 后端不可达 / 超时：按「未登录」处理，让页面正常渲染并引导登录，
+    // 而不是整页抛 500。真正的错误会在用户提交表单时以人话提示。
+    return null;
+  }
 }
